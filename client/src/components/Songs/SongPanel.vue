@@ -1,8 +1,6 @@
 <template>
-<v-layout row>
-  <v-flex xs8 sm8 offset-sm2 offset-xs1>
     <panel title="Songs">
-      <v-btn fab slot="action" Large absolute right middle class="grey darken-1" @click="navigateTo({name: 'songs-create'})">
+      <v-btn fab slot="action" Large absolute right middle class="grey darken-1" :to="{name: 'songs-create'}">
         <v-icon>playlist_add</v-icon>
       </v-btn>
       <div class="song" v-for="song in songs" :key="song.id">
@@ -17,7 +15,7 @@
             <div class="song-genre">
               {{song.genre}}
             </div>
-            <v-btn class="grey darken-4 white--text" @click="navigateTo({name:'song', params: {songId: song.id}})" type="button" name="button">View</v-btn>
+            <v-btn class="grey darken-4 white--text" :to="{name:'song', params: {songId: song.id}}" type="button" name="button">View</v-btn>
           </v-flex>
           <v-flex xs6>
             <img class="album-image" :src="song.albumImageUrl" />
@@ -25,29 +23,26 @@
         </v-layout>
       </div>
     </panel>
-  </v-flex>
-</v-layout>
 </template>
 
 <script>
 import SongsService from '@/services/SongsService'
-import Panel from '@/components/Panel'
 export default {
-  components: {
-    Panel
-  },
   data () {
     return {
       songs: null
     }
   },
-  methods: {
-    navigateTo (route) {
-      this.$router.push(route)
-    }
-  },
   async mounted () {
     this.songs = (await SongsService.index()).data
+  },
+  watch: {
+    '$route.query.search': {
+      immediate: true,
+      async handler (value) {
+        this.songs = (await SongsService.index(value)).data
+      }
+    }
   }
 }
 </script>

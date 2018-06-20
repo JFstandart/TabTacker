@@ -15,7 +15,6 @@
 
 <script>
 import AuthenticationService from '@/services/authenticationService'
-import Panel from '@/components/Panel'
 export default {
   data () {
     return {
@@ -33,19 +32,21 @@ export default {
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
+        this.$router.push({
+          name: 'songs'
+        })
       } catch (error) {
         this.error = error.response.data.error
       }
     }
-  },
-  components: {
-    Panel
   }
 }
 </script>
 
 <style scoped>
-.error {
-  color: red;
+.error{
+  background-color: #ff5252 !important;
+  border: none !important;
+  color:#000;
 }
 </style>

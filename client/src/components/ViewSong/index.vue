@@ -4,7 +4,7 @@
     <v-layout column>
       <v-flex xs6>
         <panel title="Song Metadata" class="ma-2">
-          <v-btn fab slot="action" Large absolute right middle class="grey darken-1" @click="navigateTo({name:'song-edit', params: {songId: song.id}})">
+          <v-btn fab slot="action" Large absolute right middle class="grey darken-1" :to="{name:'song-edit', params: {songId: song.id}}">
             <v-icon>edit</v-icon>
           </v-btn>
           <song-metadata :song="song" />
@@ -40,7 +40,6 @@
 
 <script>
 import SongsService from '@/services/SongsService'
-import Panel from '@/components/Panel'
 import SongMetadata from './SongMetadata'
 import YoutubeVideo from './YouTubeVideo'
 
@@ -55,14 +54,8 @@ export default {
     this.song = (await SongsService.show(songId)).data
   },
   components: {
-    Panel,
     SongMetadata,
     YoutubeVideo
-  },
-  methods: {
-    navigateTo (route) {
-      this.$router.push(route)
-    }
   }
 }
 </script>

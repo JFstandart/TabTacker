@@ -8,7 +8,6 @@
         </v-container>
       </main>
     </v-app>
-    <!--<img src="./assets/logo.png">-->
   </div>
 </template>
 
