@@ -70,8 +70,7 @@ export default {
     }
     if (this.isUserLoggedIn) {
       await SongHistoryService.post({
-        songId: this.$store.state.route.params.songId,
-        userId: this.user.id
+        songId: this.$store.state.route.params.songId
       })
     }
 
@@ -79,8 +78,7 @@ export default {
       const songId = this.$store.state.route.params.songId
       this.song = (await SongsService.show(songId)).data
       const bookmark = (await BookmarkService.index({
-        songId: songId,
-        userId: this.user.id
+        songId: songId
       })).data
       bookmark.length === 0 ? this.checkbox = false : this.checkbox = true // !!bookmark
       this.checkbox === true ? this.star = 'star' : this.star = 'star_border'
@@ -99,8 +97,7 @@ export default {
         try {
           console.log('delete')
           await BookmarkService.delete({
-            songId: this.$store.state.route.params.songId,
-            userId: this.user.id
+            songId: this.$store.state.route.params.songId
           })
         } catch (err) {
           console.log('error', err)
@@ -110,8 +107,7 @@ export default {
         try {
           console.log('create', this.$store.state.user)
           await BookmarkService.post({
-            songId: this.$store.state.route.params.songId,
-            userId: this.user.id
+            songId: this.$store.state.route.params.songId
           })
         } catch (err) {
           console.log('error', err)

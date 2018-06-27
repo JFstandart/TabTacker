@@ -6,7 +6,8 @@ const _ = require ('lodash')
 module.exports = {
   async index(req, res) {
     try {
-      const {songId, userId} = req.query
+      const userId = req.user.id
+      const {songId} = req.query
       const where = {
         UserId: userId
       }
@@ -34,7 +35,8 @@ module.exports = {
   },
   async post(req, res) {
     try {
-      const {songId, userId} = req.body.params
+      const userId = req.user.id
+      const {songId} = req.body.params
       const bookmark = await Bookmark.findOne({
         where: {
           SongId: songId,
@@ -52,14 +54,17 @@ module.exports = {
   },
   async delete(req, res) {
     try {
-      console.log('require',req.query)
-      const {songId, userId} = req.query
+      const userId = req.user.id
+      const {songId} = req.query
       const bookmark = await Bookmark.findOne({
         where: {
           SongId: songId,
           UserId: userId
         }
       })
+      if (!bookmark) {
+        res.status(403).send({error: 'You do not have access to this bookmark'})
+      }
       await bookmark.destroy()
       res.send(bookmark)
     } catch (e) {
