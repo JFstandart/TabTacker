@@ -16,5 +16,5 @@ module.exports = (app) => {
 
   app.get('/bookmarks', BookmarksController.index)
   app.post('/bookmarks', BookmarksController.post)
-  app.get('/bookmarks/:bookmarkId', BookmarksController.delete)
+  app.delete('/bookmarks', BookmarksController.delete)
 }

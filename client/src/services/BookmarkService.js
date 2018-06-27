@@ -11,7 +11,9 @@ export default {
       params: bookmark
     })
   },
-  delete (bookmarkId) {
-    return api().get(`bookmarks/${bookmarkId}`)
+  delete (bookmark) {
+    return api().delete(`bookmarks`, {
+      params: bookmark
+    })
   }
 }

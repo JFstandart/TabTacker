@@ -59,7 +59,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'isUserLoggedIn'
+      'isUserLoggedIn',
+      'user'
     ])
   },
   async mounted () {
@@ -72,9 +73,9 @@ export default {
       this.song = (await SongsService.show(songId)).data
       const bookmark = (await BookmarkService.index({
         songId: songId,
-        userId: this.$store.state.user.id
+        userId: this.user.id
       })).data
-      this.checkbox = !!bookmark
+      bookmark.length === 0 ? this.checkbox = false : this.checkbox = true // !!bookmark
       this.checkbox === true ? this.star = 'star' : this.star = 'star_border'
     } catch (err) {
       console.log('error', err)
@@ -92,7 +93,7 @@ export default {
           console.log('delete')
           await BookmarkService.delete({
             songId: this.$store.state.route.params.songId,
-            userId: this.$store.state.user.id
+            userId: this.user.id
           })
         } catch (err) {
           console.log('error', err)
@@ -103,7 +104,7 @@ export default {
           console.log('create', this.$store.state.user)
           await BookmarkService.post({
             songId: this.$store.state.route.params.songId,
-            userId: this.$store.state.user.id
+            userId: this.user.id
           })
         } catch (err) {
           console.log('error', err)
