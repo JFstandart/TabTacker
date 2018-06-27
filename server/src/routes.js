@@ -2,6 +2,7 @@ const AuthenticationController = require('./controllers/AuthenticationController
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 const SongsController = require('./controllers/SongsController')
 const BookmarksController = require('./controllers/BookmarksController')
+const HistoryContoller = require('./controllers/HistoryContoller')
 
 module.exports = (app) => {
   app.post('/register', AuthenticationControllerPolicy.register, AuthenticationController.register)
@@ -17,4 +18,7 @@ module.exports = (app) => {
   app.get('/bookmarks', BookmarksController.index)
   app.post('/bookmarks', BookmarksController.post)
   app.delete('/bookmarks', BookmarksController.delete)
+
+  app.get('/history', HistoryContoller.index)
+  app.post('/history', HistoryContoller.post)
 }

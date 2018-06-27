@@ -45,6 +45,7 @@
 <script>
 import SongsService from '@/services/SongsService'
 import BookmarkService from '@/services/BookmarkService'
+import SongHistoryService from '@/services/SongHistoryService'
 import SongMetadata from './SongMetadata'
 import YoutubeVideo from './YouTubeVideo'
 import {mapState} from 'vuex'
@@ -65,9 +66,15 @@ export default {
   },
   async mounted () {
     if (!this.isUserLoggedIn) {
-      console.log('true')
       return
     }
+    if (this.isUserLoggedIn) {
+      await SongHistoryService.post({
+        songId: this.$store.state.route.params.songId,
+        userId: this.user.id
+      })
+    }
+
     try {
       const songId = this.$store.state.route.params.songId
       this.song = (await SongsService.show(songId)).data
